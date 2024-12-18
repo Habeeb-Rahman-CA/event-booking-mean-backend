@@ -25,12 +25,12 @@ const getEvents = async (req, res) => {
     }
 }
 
-const getEventById = async(req, res) =>{
+const getEventById = async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
         res.status(200).json(event)
     } catch (err) {
-        res.status(500).json({message: err.message})
+        res.status(500).json({ message: err.message })
     }
 }
 
@@ -47,4 +47,14 @@ const bookEvent = async (req, res) => {
     }
 }
 
-module.exports = { createEvent, getEvents, bookEvent, getEventById }
+const cancelEvent = async (req, res) => {
+    try {
+        const event = await Event.findByIdAndDelete(req.params.id)
+        if (!event) return res.status(500).json({ message: 'Event not found' })
+        res.status(200).json({message: 'Event is cancelled'})
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+}
+
+module.exports = { createEvent, getEvents, bookEvent, getEventById, cancelEvent }
