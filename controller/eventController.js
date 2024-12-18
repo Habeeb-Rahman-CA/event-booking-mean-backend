@@ -25,6 +25,15 @@ const getEvents = async (req, res) => {
     }
 }
 
+const getEventById = async(req, res) =>{
+    try {
+        const event = await Event.findById(req.params.id)
+        res.status(200).json(event)
+    } catch (err) {
+        res.status(500).json({message: err.message})
+    }
+}
+
 const bookEvent = async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
@@ -38,4 +47,4 @@ const bookEvent = async (req, res) => {
     }
 }
 
-module.exports = { createEvent, getEvents, bookEvent }
+module.exports = { createEvent, getEvents, bookEvent, getEventById }
